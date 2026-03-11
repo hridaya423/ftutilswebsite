@@ -6,7 +6,7 @@ import { ArrowRight } from "@phosphor-icons/react";
 
 const enhancements = [
   { before: "Click through menus", after: "Ctrl+K command palette" },
-  { before: "Basic project views", after: "Full stats dashboard" },
+  { before: "Basic project stats", after: "Full stats dashboard" },
   { before: "One default look", after: "5 handcrafted themes" },
   { before: "Manual changelogs", after: "One-click changelog gen" },
 ];
