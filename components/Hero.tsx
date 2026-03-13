@@ -8,10 +8,13 @@ import { CaretRight } from "@phosphor-icons/react";
 import {
   SiGooglechrome,
   SiFirefoxbrowser,
+  SiZenbrowser,
   SiSafari,
   SiBrave,
   SiArc,
   SiOpera,
+  SiOperagx,
+  SiLibrewolf,
   SiGithub,
 } from "@icons-pack/react-simple-icons";
 
@@ -244,13 +247,13 @@ export default function Hero() {
                   { name: "Chrome", icon: SiGooglechrome, color: "#4285F4" },
                   { name: "Firefox", icon: SiFirefoxbrowser, color: "#FF7139" },
                   { name: "Safari", icon: SiSafari, color: "#006CFF" },
-                  { name: "Edge", icon: SiGooglechrome, color: "#0EA5E9" },
                   { name: "Brave", icon: SiBrave, color: "#FB542B" },
-                  { name: "Vivaldi", icon: SiGooglechrome, color: "#EF3939" },
+                  { name: "Zen", icon: SiZenbrowser, color: "#8B5CF6" },
                   { name: "Arc", icon: SiArc, color: "#FCBFBD" },
                   { name: "Opera", icon: SiOpera, color: "#FF1B2D" },
-                  { name: "Chromium", icon: SiGooglechrome, color: "#7C8A99" },
-               ].map(
+                  { name: "Opera GX", icon: SiOperagx, color: "#EE2950" },
+                  { name: "LibreWolf", icon: SiLibrewolf, color: "#00ACFF" },
+                ].map(
                 (browser) => (
                   <div
                     key={browser.name}

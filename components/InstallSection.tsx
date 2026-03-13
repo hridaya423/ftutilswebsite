@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { gsap, useGSAP } from "@/lib/gsap";
 import MagneticButton from "./MagneticButton";
 import {
   DownloadSimple,
@@ -11,41 +11,39 @@ import {
   SiGooglechrome,
   SiFirefoxbrowser,
   SiSafari,
+  SiBrave,
+  SiArc,
+  SiOpera,
+  SiOperagx,
+  SiLibrewolf,
+  SiZenbrowser,
 } from "@icons-pack/react-simple-icons";
 
 interface BrowserCard {
-  name: string;
-  status: "available" | "coming-soon";
-  statusLabel: string;
-  cta: string;
   href: string;
-  featured: boolean;
 }
+
+const chromiumCompanions = [
+  { name: "Brave", icon: SiBrave, color: "#FB542B" },
+  { name: "Arc", icon: SiArc, color: "#FCBFBD" },
+  { name: "Opera", icon: SiOpera, color: "#FF1B2D" },
+  { name: "Opera GX", icon: SiOperagx, color: "#EE2950" },
+];
+
+const firefoxCompanions = [
+  { name: "Zen", icon: SiZenbrowser, color: "#8B5CF6" },
+  { name: "LibreWolf", icon: SiLibrewolf, color: "#00ACFF" },
+];
 
 const browsers: BrowserCard[] = [
   {
-    name: "Chrome",
-    status: "available",
-    statusLabel: "Available",
-    cta: "Add to Chrome",
     href: "https://chromewebstore.google.com/detail/flavortown-utils/fdacgialppflhglkinbiapaenfahhjge",
-    featured: true,
   },
   {
-    name: "Firefox",
-    status: "available",
-    statusLabel: "Available",
-    cta: "Add to Firefox",
     href: "https://addons.mozilla.org/en-US/firefox/addon/flavortown-utils/",
-    featured: false,
   },
   {
-    name: "Safari",
-    status: "coming-soon",
-    statusLabel: "Manual Setup",
-    cta: "See instructions",
     href: "/docs/how-to-download#safari",
-    featured: false,
   },
 ];
 
@@ -228,22 +226,22 @@ export default function InstallSection() {
                   >
                     <SiGooglechrome size={36} color="#4285F4" />
                   </div>
-                  <span
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border"
-                    style={{
-                      color: "var(--theme-accent)",
-                      borderColor: "var(--theme-accent)",
-                      backgroundColor:
-                        "color-mix(in srgb, var(--theme-accent) 10%, transparent)",
-                      fontFamily: "var(--font-heading)",
-                    }}
-                  >
-                    <span
-                      className="w-1.5 h-1.5 rounded-full animate-pulse"
-                      style={{ backgroundColor: "var(--theme-accent)" }}
-                    />
-                    Available
-                  </span>
+                  <div className="flex flex-wrap justify-end gap-2 max-w-[270px]">
+                    {chromiumCompanions.map((browser) => (
+                      <span
+                        key={browser.name}
+                        title={browser.name}
+                        aria-label={browser.name}
+                        className="w-8 h-8 rounded-lg border flex items-center justify-center"
+                        style={{
+                          borderColor: "var(--theme-border)",
+                          backgroundColor: "var(--theme-surface)",
+                        }}
+                      >
+                        <browser.icon size={14} color={browser.color} />
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="mt-8">
@@ -265,39 +263,6 @@ export default function InstallSection() {
                     Store.
                   </p>
 
-                  <div className="mt-4 flex flex-wrap items-center gap-3">
-                    <span
-                      className="text-xs"
-                      style={{
-                        color: "var(--theme-text-muted)",
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      Also works on
-                    </span>
-                    {[
-                      "Brave",
-                      "Edge",
-                      "Vivaldi",
-                      "Arc",
-                      "Opera",
-                      "Chromium",
-                      "Thorium",
-                      "Ungoogled Chromium",
-                    ].map((browser) => (
-                      <span
-                        key={browser}
-                        className="text-xs font-medium px-2 py-1 rounded-full border"
-                        style={{
-                          color: "var(--theme-text-muted)",
-                          borderColor: "var(--theme-border)",
-                          backgroundColor: "var(--theme-surface)",
-                        }}
-                      >
-                        {browser}
-                      </span>
-                    ))}
-                  </div>
                 </div>
 
                 <div className="mt-8">
@@ -345,22 +310,22 @@ export default function InstallSection() {
                     >
                       <SiFirefoxbrowser size={28} color="#FF7139" />
                     </div>
-                    <span
-                      className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider border"
-                      style={{
-                        color: "var(--theme-accent)",
-                        borderColor: "var(--theme-accent)",
-                        backgroundColor:
-                          "color-mix(in srgb, var(--theme-accent) 10%, transparent)",
-                        fontFamily: "var(--font-heading)",
-                      }}
-                    >
-                      <span
-                        className="w-1.5 h-1.5 rounded-full animate-pulse"
-                        style={{ backgroundColor: "var(--theme-accent)" }}
-                      />
-                      Available
-                    </span>
+                    <div className="flex items-center gap-2">
+                      {firefoxCompanions.map((browser) => (
+                        <span
+                          key={browser.name}
+                          title={browser.name}
+                          aria-label={browser.name}
+                          className="w-7 h-7 rounded-lg border flex items-center justify-center"
+                          style={{
+                            borderColor: "var(--theme-border)",
+                            backgroundColor: "var(--theme-surface)",
+                          }}
+                        >
+                          <browser.icon size={12} color={browser.color} />
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="mt-5">
@@ -432,17 +397,6 @@ export default function InstallSection() {
                     >
                       <SiSafari size={28} color="#006CFF" />
                     </div>
-                    <span
-                      className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider border"
-                      style={{
-                        color: "var(--theme-text-muted)",
-                        borderColor: "var(--theme-border)",
-                        backgroundColor: "var(--theme-surface)",
-                        fontFamily: "var(--font-heading)",
-                      }}
-                    >
-                      {browsers[2].statusLabel}
-                    </span>
                   </div>
 
                   <div className="mt-5">
