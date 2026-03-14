@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { getCachedExtensionStats, primeExtensionStats } from "@/lib/extension-stats-client";
 
 const devScreenshots = [
   { src: "/feedback/Screenshot 2026-03-10 at 20.07.43.png", width: 382, height: 130, alt: "fireentity (FT dev): i love ft utils!!" },
@@ -33,104 +34,235 @@ const communityScreenshots = [
   { src: "/feedback/Screenshot 2026-03-10 at 20.08.57.png", width: 328, height: 54, alt: "ft-utils clearly is superior" },
 ];
 
+function formatSignedNumber(value: number): string {
+  const rounded = Math.round(Number(value) || 0);
+  return rounded > 0 ? `+${rounded}` : String(rounded);
+}
+
+type LiveStats = {
+  percentMoreThanSecond: number;
+  usageMultiplierVsSecond: number;
+  weeklyUserDeltaVsSecond: number;
+};
+
 export default function Testimonials() {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const devRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
-  const counterRef = useRef<HTMLSpanElement>(null);
+  const percentRef = useRef<HTMLSpanElement>(null);
+  const multiplierRef = useRef<HTMLDivElement>(null);
+  const deltaRef = useRef<HTMLDivElement>(null);
+  const latestStatsRef = useRef<LiveStats | null>(null);
+
+  const [liveStats, setLiveStats] = useState<LiveStats | null>(() => {
+    const warm = getCachedExtensionStats();
+    if (!warm) return null;
+    return {
+      percentMoreThanSecond: Number(warm.percentMoreThanSecond),
+      usageMultiplierVsSecond: Number(warm.usageMultiplierVsSecond),
+      weeklyUserDeltaVsSecond: Number(warm.weeklyUserDeltaVsSecond),
+    };
+  });
+
+  useEffect(() => {
+    latestStatsRef.current = liveStats;
+  }, [liveStats]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadStats = async () => {
+      const warm = getCachedExtensionStats();
+      if (warm && mounted) {
+        setLiveStats({
+          percentMoreThanSecond: Number(warm.percentMoreThanSecond),
+          usageMultiplierVsSecond: Number(warm.usageMultiplierVsSecond),
+          weeklyUserDeltaVsSecond: Number(warm.weeklyUserDeltaVsSecond),
+        });
+      }
+
+      try {
+        const data = await primeExtensionStats({ force: true });
+        if (!data) return;
+        if (!mounted) return;
+
+        const percent = Number(data.percentMoreThanSecond);
+        const multiplier = Number(data.usageMultiplierVsSecond);
+        const delta = Number(data.weeklyUserDeltaVsSecond);
+
+        if (!Number.isFinite(percent) || !Number.isFinite(multiplier) || !Number.isFinite(delta)) return;
+
+        setLiveStats({
+          percentMoreThanSecond: percent,
+          usageMultiplierVsSecond: multiplier,
+          weeklyUserDeltaVsSecond: delta,
+        });
+      } catch {
+      }
+    };
+
+    loadStats();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useGSAP(
     () => {
-      gsap.from(headlineRef.current, {
-        x: -60,
-        opacity: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: headlineRef.current,
-          start: "top 85%",
-          end: "top 55%",
-          scrub: 1,
-        },
-      });
+      if (headlineRef.current) {
+        gsap.fromTo(
+          headlineRef.current,
+          { x: -36, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: headlineRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
       const devCards = devRef.current?.querySelectorAll("[data-dev-card]");
       if (devCards) {
         devCards.forEach((card, i) => {
-          gsap.set(card, { y: 40, opacity: 0, scale: 0.96 });
-          gsap.to(card, {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.7,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 92%",
-              end: "top 65%",
-              scrub: 1,
-            },
-            delay: i * 0.04,
-          });
+          gsap.fromTo(
+            card,
+            { y: 24, opacity: 0, scale: 0.98 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.55,
+              ease: "power3.out",
+              delay: i * 0.05,
+              scrollTrigger: {
+                trigger: card,
+                start: "top 94%",
+                once: true,
+              },
+            }
+          );
         });
       }
 
       const cards = gridRef.current?.querySelectorAll("[data-testimonial-card]");
       if (cards) {
         cards.forEach((card, i) => {
-          gsap.set(card, { y: 80, opacity: 0, rotateX: 6 });
-          gsap.to(card, {
-            y: 0,
-            opacity: 1,
-            rotateX: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 92%",
-              end: "top 60%",
-              scrub: 1,
-            },
-            delay: i * 0.02,
-          });
+          gsap.fromTo(
+            card,
+            { y: 42, opacity: 0, rotateX: 4 },
+            {
+              y: 0,
+              opacity: 1,
+              rotateX: 0,
+              duration: 0.6,
+              ease: "power3.out",
+              delay: i * 0.025,
+              scrollTrigger: {
+                trigger: card,
+                start: "top 96%",
+                once: true,
+              },
+            }
+          );
         });
       }
 
-      if (counterRef.current && socialRef.current) {
-        const counter = { val: 0 };
-        gsap.to(counter, {
-          val: 355,
-          duration: 2.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: socialRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-          onUpdate: () => {
-            if (counterRef.current) {
-              counterRef.current.textContent = Math.round(counter.val).toString();
-            }
-          },
-        });
+      if (socialRef.current) {
+        const targets = latestStatsRef.current;
+        const percentCounter = { val: 0 };
+        const multiplierCounter = { val: 0 };
+        const deltaCounter = { val: 0 };
+
+        if (targets) {
+          gsap.to(percentCounter, {
+            val: targets.percentMoreThanSecond,
+            duration: 1.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: socialRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+            onUpdate: () => {
+              if (percentRef.current) {
+                percentRef.current.textContent = Math.round(percentCounter.val).toString();
+              }
+            },
+          });
+
+          gsap.to(multiplierCounter, {
+            val: targets.usageMultiplierVsSecond,
+            duration: 1.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: socialRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+            onUpdate: () => {
+              if (multiplierRef.current) {
+                multiplierRef.current.textContent = `${multiplierCounter.val.toFixed(1)}x`;
+              }
+            },
+          });
+
+          gsap.to(deltaCounter, {
+            val: targets.weeklyUserDeltaVsSecond,
+            duration: 1.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: socialRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+            onUpdate: () => {
+              if (deltaRef.current) {
+                deltaRef.current.textContent = formatSignedNumber(deltaCounter.val);
+              }
+            },
+          });
+        }
 
         gsap.from(socialRef.current, {
-          y: 60,
+          y: 28,
           opacity: 0,
-          duration: 1,
+          duration: 0.55,
           ease: "power3.out",
           scrollTrigger: {
             trigger: socialRef.current,
-            start: "top 85%",
-            end: "top 55%",
-            scrub: 1,
+            start: "top 92%",
+            once: true,
           },
         });
       }
     },
     { scope: sectionRef, dependencies: [] }
   );
+
+  useEffect(() => {
+    if (!liveStats) {
+      if (percentRef.current) percentRef.current.textContent = "--";
+      if (multiplierRef.current) multiplierRef.current.textContent = "--";
+      if (deltaRef.current) deltaRef.current.textContent = "--";
+      return;
+    }
+
+    if (percentRef.current) percentRef.current.textContent = String(Math.round(liveStats.percentMoreThanSecond));
+    if (multiplierRef.current) multiplierRef.current.textContent = `${liveStats.usageMultiplierVsSecond.toFixed(1)}x`;
+    if (deltaRef.current) deltaRef.current.textContent = formatSignedNumber(liveStats.weeklyUserDeltaVsSecond);
+  }, [liveStats]);
 
   return (
     <section
@@ -253,14 +385,14 @@ export default function Testimonials() {
             >
               <div className="flex items-baseline justify-center gap-0.5">
                 <span
-                  ref={counterRef}
+                  ref={percentRef}
                   className="text-4xl sm:text-5xl font-black tracking-tighter tabular-nums"
                   style={{
                     fontFamily: "var(--font-heading)",
                     color: "var(--theme-accent)",
                   }}
                 >
-                  0
+                  --
                 </span>
                 <span
                   className="text-2xl sm:text-3xl font-black tracking-tighter"
@@ -290,8 +422,9 @@ export default function Testimonials() {
                   fontFamily: "var(--font-heading)",
                   color: "var(--theme-accent)",
                 }}
+                ref={multiplierRef}
               >
-                4.5x
+                --
               </div>
               <p className="text-xs mt-1" style={{ color: "var(--theme-text-muted)" }}>
                 usage multiplier vs #2
@@ -311,8 +444,9 @@ export default function Testimonials() {
                   fontFamily: "var(--font-heading)",
                   color: "var(--theme-accent)",
                 }}
+                ref={deltaRef}
               >
-                +156
+                --
               </div>
               <p className="text-xs mt-1" style={{ color: "var(--theme-text-muted)" }}>
                 more weekly users
@@ -337,6 +471,9 @@ export default function Testimonials() {
               quality={90}
             />
           </div>
+          <p className="text-[11px] -mt-5 text-center" style={{ color: "var(--theme-text-muted)", opacity: 0.75 }}>
+            Live usage numbers are fetched in real time; the screenshot below may be older.
+          </p>
         </div>
       </div>
 

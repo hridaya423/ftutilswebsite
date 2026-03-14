@@ -2,19 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { primeExtensionStats } from "@/lib/extension-stats-client";
 import MagneticButton from "./MagneticButton";
 import TextScramble from "./TextScramble";
 import { CaretRight } from "@phosphor-icons/react";
 import {
   SiGooglechrome,
   SiFirefoxbrowser,
-  SiZenbrowser,
   SiSafari,
   SiBrave,
-  SiArc,
-  SiOpera,
-  SiOperagx,
-  SiLibrewolf,
   SiGithub,
 } from "@icons-pack/react-simple-icons";
 
@@ -39,6 +35,8 @@ export default function Hero() {
   });
 
   useEffect(() => {
+    primeExtensionStats();
+
     const ua = navigator.userAgent.toLowerCase();
     if (ua.includes("firefox")) {
       setPrimaryInstall({
@@ -241,31 +239,25 @@ export default function Hero() {
 
             <div
               ref={badgesRef}
-              className="flex flex-wrap justify-center items-center gap-4 sm:gap-5 mt-8 will-change-transform"
+              className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 mt-8 will-change-transform"
             >
                 {[
                   { name: "Chrome", icon: SiGooglechrome, color: "#4285F4" },
                   { name: "Firefox", icon: SiFirefoxbrowser, color: "#FF7139" },
                   { name: "Safari", icon: SiSafari, color: "#006CFF" },
                   { name: "Brave", icon: SiBrave, color: "#FB542B" },
-                  { name: "Zen", icon: SiZenbrowser, color: "#8B5CF6" },
-                  { name: "Arc", icon: SiArc, color: "#FCBFBD" },
-                  { name: "Opera", icon: SiOpera, color: "#FF1B2D" },
-                  { name: "Opera GX", icon: SiOperagx, color: "#EE2950" },
-                  { name: "LibreWolf", icon: SiLibrewolf, color: "#00ACFF" },
-                ].map(
-                (browser) => (
+                  { name: "...and many more" },
+                ].map((browser) => (
                   <div
                     key={browser.name}
                     data-browser-badge
                     className="flex items-center gap-1.5 text-xs font-medium opacity-50"
                     style={{ color: "var(--theme-text)" }}
                   >
-                    <browser.icon size={14} color={browser.color} />
+                    {browser.icon ? <browser.icon size={14} color={browser.color} /> : null}
                     {browser.name}
                   </div>
-                )
-              )}
+                ))}
             </div>
           </div>
         </div>

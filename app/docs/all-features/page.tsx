@@ -12,6 +12,8 @@ const groups = [
       "One-click changelog generation with branch and format options",
       "Ctrl+K command palette",
       "Auto-find repo and demo links",
+      "Explore Users page with search",
+      "Pinned projects on /projects board",
     ],
   },
   {
@@ -19,7 +21,6 @@ const groups = [
     title: "Stats and analytics",
     items: [
       "Payout percentile, cookies/h, devlog frequency, and cookies",
-      "Vote estimation average stars",
       "Average stars across each category",
       "Total project stats",
       "Kitchen dashboard graph and stats",
@@ -64,7 +65,9 @@ const groups = [
       "Doomscroll devlogs",
       "Speed read devlogs",
       "Sync goals/settings across devices",
-      "Vote feedback from #flavortown-share-votes",
+      "Multiline vote feedback on /votes/new",
+      "Historical vote feedback for ships before Feb 23",
+      "Slack profile cards from @mentions",
       "TODOs with Slack sync",
     ],
   },

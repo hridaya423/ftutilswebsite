@@ -1,17 +1,15 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import Link from "next/link";
+import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 import MagneticButton from "./MagneticButton";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 
 export default function Nav() {
   const navRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const pathname = usePathname();
-  const isHome = pathname === "/";
 
   useGSAP(() => {
     ScrollTrigger.create({
@@ -23,9 +21,9 @@ export default function Nav() {
   });
 
   const navLinks = [
-    { label: "Features", href: isHome ? "#features" : "/#features" },
-    { label: "Themes", href: isHome ? "#themes" : "/#themes" },
-    { label: "Install", href: isHome ? "#install" : "/#install" },
+    { label: "Features", href: "/#features" },
+    { label: "Themes", href: "/#themes" },
+    { label: "Install", href: "/#install" },
     { label: "Docs", href: "/docs" },
   ];
 
@@ -39,10 +37,7 @@ export default function Nav() {
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between">
-        <a
-          href={isHome ? "#" : "/"}
-          className="flex items-center gap-3 group"
-        >
+        <Link href="/" className="flex items-center gap-3 group">
           <Image
             src="/icon128.png"
             alt="Flavortown Utils"
@@ -59,7 +54,7 @@ export default function Nav() {
           >
             Flavortown Utils
           </span>
-        </a>
+        </Link>
 
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
@@ -96,7 +91,7 @@ export default function Nav() {
           </MagneticButton>
           <MagneticButton
             as="a"
-            href={isHome ? "#install" : "/#install"}
+            href="/#install"
             strength={0.15}
           >
             <span

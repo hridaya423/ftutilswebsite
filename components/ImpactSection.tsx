@@ -23,7 +23,7 @@ const valueProps = [
     detail: "Inline devlogging with markdown editing and one-click changelog generation",
   },
   {
-    metric: "25+",
+    metric: "30+",
     headline: "QoL features",
     detail: "Themes, heatmaps, screenshots, stats all baked into one extension",
   },
@@ -273,10 +273,10 @@ export default function ImpactSection() {
                  color: "var(--theme-text)",
                }}
              >
-               That&apos;s Flavortown Utils.
-               <br />
-                <span style={{ color: "var(--theme-accent)" }}>25+ features.</span>
-              </h3>
+                That&apos;s Flavortown Utils.
+                <br />
+                 <span style={{ color: "var(--theme-accent)" }}>30+ features.</span>
+               </h3>
 
             <div className="relative mt-12 sm:mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full max-w-[720px]">
               {valueProps.map((prop, i) => (

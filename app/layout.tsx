@@ -18,16 +18,16 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Flavortown Utils",
   description:
-    "The browser extension that makes Flavortown actually good. Command palette, activity heatmap, inline devlogging, 5 hand-tuned themes, and 20+ more features.",
+    "The browser extension that makes Flavortown actually good. Command palette, activity heatmap, inline devlogging, Explore Users, pinned projects, and 30+ features.",
   icons: {
     icon: "/icon128.png",
     apple: "/icon128.png",
   },
   metadataBase: new URL("https://ftutils.hridya.tech"),
   openGraph: {
-    title: "Flavortown Utils - 25+ Features, 5 Themes, One Extension",
+    title: "Flavortown Utils - 30+ Features, 5 Themes, One Extension",
     description:
-      "The browser extension that makes Flavortown actually good. Command palette, activity heatmap, inline devlogging, and 20+ more features.",
+      "The browser extension that makes Flavortown actually good. Command palette, activity heatmap, inline devlogging, and 30+ more features.",
     url: "https://ftutils.hridya.tech",
     siteName: "Flavortown Utils",
     images: [

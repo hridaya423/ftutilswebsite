@@ -14,7 +14,6 @@ import {
   SiBrave,
   SiArc,
   SiOpera,
-  SiOperagx,
   SiLibrewolf,
   SiZenbrowser,
 } from "@icons-pack/react-simple-icons";
@@ -27,7 +26,6 @@ const chromiumCompanions = [
   { name: "Brave", icon: SiBrave, color: "#FB542B" },
   { name: "Arc", icon: SiArc, color: "#FCBFBD" },
   { name: "Opera", icon: SiOpera, color: "#FF1B2D" },
-  { name: "Opera GX", icon: SiOperagx, color: "#EE2950" },
 ];
 
 const firefoxCompanions = [

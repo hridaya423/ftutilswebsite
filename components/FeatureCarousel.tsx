@@ -65,6 +65,11 @@ const features = [
     icon: "search",
   },
   {
+    title: "Explore Users",
+    desc: "Search users by display name or Slack ID with quick stats",
+    icon: "search",
+  },
+  {
     title: "Shop Upgrades",
     desc: "See item accessories and richer goal stats",
     icon: "grid",
@@ -86,8 +91,13 @@ const features = [
   },
   {
     title: "Estimated Payouts",
-    desc: "See expected payout signals earlier",
+    desc: "Early payout signals, including first-ship fallback estimates",
     icon: "bar",
+  },
+  {
+    title: "Pinned Projects",
+    desc: "Pin your projects to keep important cards at the top",
+    icon: "trophy",
   },
   {
     title: "Doomscroll Devlogs",
@@ -116,12 +126,12 @@ const features = [
   },
   {
     title: "Voting Feedback Feed",
-    desc: "See real comments from flavortown-share-votes",
+    desc: "Historical vote feedback for pre-Feb-23 ships",
     icon: "trophy",
   },
   {
-    title: "TODO + Slack Sync",
-    desc: "Keep TODOs aligned with Slack updates",
+    title: "Slack Profile Cards",
+    desc: "Mention bot in Slack to fetch user + project profile cards",
     icon: "link",
   },
   {

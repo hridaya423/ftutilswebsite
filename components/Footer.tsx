@@ -18,7 +18,6 @@ const footerLinks = [
     heading: "Resources",
     links: [
       { label: "Docs", href: "#docs" },
-      { label: "Changelog", href: "#changelog" },
       {
         label: "GitHub",
         href: "https://github.com/hridaya423/flavortownutils",

@@ -8,6 +8,7 @@ const toc = [
       { id: "chrome", label: "Chrome" },
       { id: "firefox", label: "Firefox" },
       { id: "safari", label: "Safari" },
+      { id: "migration", label: "Spicetown migration" },
     ],
   },
 ];
@@ -68,6 +69,21 @@ export default function HowToDownloadPage() {
               <li>Open Safari and go to Settings, then enable web developer features.</li>
               <li>Open the Developer tab and allow unsigned extensions.</li>
               <li>Use Add temporary extension and select the unzipped folder.</li>
+            </ol>
+          </section>
+
+          <section id="migration" className="scroll-mt-28 rounded-2xl border p-4 md:p-5" style={{ backgroundColor: "var(--theme-surface)", borderColor: "var(--theme-border)" }}>
+            <h2 className="text-xl font-bold" style={{ color: "var(--theme-text)", fontFamily: "var(--font-heading)" }}>
+              Spicetown to Flavortown Utils migration
+            </h2>
+            <p className="mt-2 text-sm" style={{ color: "var(--theme-text-muted)" }}>
+              We support Spicetown to Flavortown Utils migration and data compatibility.
+            </p>
+            <ol className="mt-2 text-sm space-y-1.5 list-decimal list-inside" style={{ color: "var(--theme-text-muted)" }}>
+              <li>Install Flavortown Utils.</li>
+              <li>Open the extension popup.</li>
+              <li>Click <strong>Import from Spicetown</strong>.</li>
+              <li>Wait for import confirmation, then refresh Flavortown.</li>
             </ol>
           </section>
         </section>

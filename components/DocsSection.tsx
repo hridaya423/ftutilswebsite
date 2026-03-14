@@ -24,6 +24,11 @@ const faqItems: FaqItem[] = [
     answer:
       "Open the extension popup and click the palette icon in the top-right corner, or press Ctrl+K (Cmd+K on Mac) to open the Command Palette and type \"theme.\" Choose from five hand-tuned themes - changes apply instantly with zero page reload.",
   },
+  {
+    question: "How do I switch from Spicetown?",
+    answer:
+      "We support Spicetown to Flavortown Utils migration with data compatibility. Install Flavortown Utils, open the extension popup, and click \"Import from Spicetown\" to bring your data over.",
+  },
 
   {
     question: "How do I use the Command Palette?",

@@ -139,18 +139,33 @@ export default function BentoFeatures() {
               }
             );
             if (scoreEl) {
+              const scoreState = { value: 0 };
               gsap.fromTo(
-                scoreEl,
-                { innerText: "0.00" },
+                scoreState,
+                { value: 0 },
                 {
-                  innerText: "5.64",
+                  value: 8.46,
                   duration: 1.2,
                   ease: "power2.out",
-                  snap: { innerText: 0.01 },
+                  onUpdate: () => {
+                    scoreEl.textContent = `${scoreState.value.toFixed(2)}/9`;
+                  },
                   delay: 0.3,
                 }
               );
             }
+
+            const filledStars = Math.round(8.46);
+            stars.forEach((starEl, index) => {
+              const starNode = starEl as SVGElement;
+              const starPath = starNode.querySelector("path");
+              const isFilled = index < filledStars;
+              starNode.style.color = isFilled ? "var(--theme-accent)" : "var(--theme-text-muted)";
+              if (starPath) {
+                starPath.setAttribute("fill", isFilled ? "currentColor" : "none");
+              }
+            });
+
             gsap.fromTo(
               voteBars,
               { scaleX: 0 },
@@ -361,8 +376,8 @@ export default function BentoFeatures() {
                     { num: 5, parts: [{ t: "- ", c: "muted" }, { t: "Command palette (", c: "text" }, { t: "Ctrl+K", c: "accent" }, { t: ")", c: "text" }] },
                     { num: 6, parts: [{ t: "- ", c: "muted" }, { t: "Heatmap visualization", c: "text" }] },
                     { num: 7, parts: [{ t: "", c: "text" }] },
-                    { num: 8, parts: [{ t: "```js", c: "accent" }] },
-                    { num: 9, parts: [{ t: "const ", c: "accent" }, { t: "streak = ", c: "text" }, { t: "42", c: "accent" }] },
+                    { num: 8, parts: [{ t: "- ", c: "muted" }, { t: "Ship streak: ", c: "text" }, { t: "42 days", c: "accent" }] },
+                    { num: 9, parts: [{ t: "- ", c: "muted" }, { t: "Payout percentile: ", c: "text" }, { t: "Top 2.38%", c: "accent" }] },
                   ].map((line) => (
                     <div
                       key={line.num}
@@ -474,7 +489,7 @@ export default function BentoFeatures() {
               ref={votingCardRef}
               data-bento
               data-bento-row="2"
-              className="h-full p-6 md:p-8 will-change-transform"
+              className="h-full min-h-[390px] p-6 md:p-8 will-change-transform"
               style={{
                 background: "var(--theme-card-bg)",
                 borderColor: "var(--theme-border)",
@@ -521,21 +536,21 @@ export default function BentoFeatures() {
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex gap-0.5">
-                    {[1, 2, 3, 4, 5].map((star) => (
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((star) => (
                       <svg
                         key={star}
                         data-star
-                        width="18"
-                        height="18"
+                        width="14"
+                        height="14"
                         viewBox="0 0 18 18"
                         style={{
-                          color: star <= 4 ? "var(--theme-accent)" : "var(--theme-text-muted)",
+                          color: "var(--theme-text-muted)",
                           opacity: 0,
                         }}
                       >
                         <path
                           d="M9 2L11 6.5L16 7.2L12.5 10.5L13.3 15.5L9 13.2L4.7 15.5L5.5 10.5L2 7.2L7 6.5L9 2Z"
-                          fill={star <= 4 ? "currentColor" : "none"}
+                          fill="none"
                           stroke="currentColor"
                           strokeWidth="1"
                           strokeLinejoin="round"
@@ -548,15 +563,15 @@ export default function BentoFeatures() {
                      className="text-xl font-bold font-mono"
                      style={{ color: "var(--theme-text)" }}
                    >
-                     0.00
+                     0.00/9
                    </span>
                 </div>
                 <div className="space-y-2">
                   {[
-                    { label: "Originality", stars: 5.5 },
-                    { label: "Technical", stars: 6.0 },
-                    { label: "Usability", stars: 5.0 },
-                    { label: "Story", stars: 6.0 },
+                    { label: "Originality", stars: 8.3 },
+                    { label: "Technical", stars: 9.0 },
+                    { label: "Usability", stars: 7.5 },
+                    { label: "Story", stars: 9.0 },
                   ].map((cat) => (
                     <div key={cat.label} className="flex items-center gap-2">
                       <span
@@ -573,7 +588,7 @@ export default function BentoFeatures() {
                           data-vote-bar
                           className="h-full rounded-full origin-left"
                           style={{
-                            width: `${(cat.stars / 6) * 100}%`,
+                            width: `${(cat.stars / 9) * 100}%`,
                             backgroundColor: "var(--theme-accent)",
                             transform: "scaleX(0)",
                           }}
@@ -583,7 +598,7 @@ export default function BentoFeatures() {
                         className="text-[9px] font-mono w-10"
                         style={{ color: "var(--theme-text-muted)" }}
                       >
-                        {cat.stars.toFixed(1)}
+                         {cat.stars.toFixed(1)}/9
                       </span>
                     </div>
                   ))}
