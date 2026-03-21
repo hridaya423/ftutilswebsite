@@ -462,8 +462,8 @@ export default function Testimonials() {
             }}
           >
             <Image
-              src="/users.jpg"
-              alt="Flavortown Utils leads with 200 weekly users compared to other extensions"
+              src="/users.png"
+              alt="Flavortown Utils leads with 226 weekly users compared to other extensions"
               width={2258}
               height={778}
               className="w-full h-auto block"
@@ -472,7 +472,7 @@ export default function Testimonials() {
             />
           </div>
           <p className="text-[11px] -mt-5 text-center" style={{ color: "var(--theme-text-muted)", opacity: 0.75 }}>
-            Live usage numbers are fetched in real time; the screenshot below may be older.
+            Live usage numbers are fetched in real time; the screenshot above may be older.
           </p>
         </div>
       </div>
